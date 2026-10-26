@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: One row per order. Columns renamed for clarity; no business logic.
+    columns:
+      - name: order_id
+        description: Primary key.
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null
+      - name: order_status
+        tests:
+          - accepted_values:
+              values: ['delivered','shipped','canceled','unavailable','invoiced','processing','created','approved']
+
+  - name: stg_order_items
+    description: One row per item within an order. Grain is order_id + order_item_id.
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+      - name: item_price
+        tests:
+          - not_null
+
+  - name: stg_customers
+    description: One row per customer record.
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null

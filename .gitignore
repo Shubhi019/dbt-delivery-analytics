@@ -1,0 +1,16 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# dbt
+target/
+dbt_packages/
+logs/
+
+# DuckDB database — rebuilt by `dbt seed && dbt run`
+*.duckdb
+*.duckdb.wal
+
+# Source data — download from Kaggle, see README
+seeds/*.csv

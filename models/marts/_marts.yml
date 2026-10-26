@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: fct_order_delivery
+    description: >
+      One row per delivered order. Measures delivery against the estimate shown
+      to the customer at purchase, and decomposes elapsed time into approval,
+      carrier handoff and transit stages so lateness can be attributed to a
+      stage rather than reported as an average.
+    columns:
+      - name: order_id
+        description: Primary key. Grain is one row per delivered order.
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+      - name: is_on_time
+        description: True when delivered on or before the estimated delivery date.
+        tests:
+          - not_null
+      - name: days_in_transit
+        description: Days between carrier handoff and customer delivery.
